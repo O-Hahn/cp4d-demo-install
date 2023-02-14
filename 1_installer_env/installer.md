@@ -69,7 +69,9 @@ sudo usermod -aG docker cloudpakclassic
 ## Append to .zshrc
 enhance .bashrc or .zshrc with the customization for the CLIs 
 
-copy the add_to_zshrc.sh into the local .zshrc or .bashrc
+copy the add_to_zshrc.sh into the local .zshrc or .bashrc - modify the path to the cpd-demo-env.sh file
+
+source ~/.zshrc
 
 ## Optional
 

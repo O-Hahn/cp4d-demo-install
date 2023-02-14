@@ -1,5 +1,7 @@
 # Install CP4D
 
+https://www.ibm.com/docs/en/cloud-paks/cp-data/4.6.x?topic=installing
+
 ## Prepare the environment
 Edit the cpd-demo-env.sh file with your credentials and informations. 
 
@@ -15,16 +17,20 @@ cpd-cli manage login-to-ocp \
 --server=${OCP_URL} \
 --token=${OCP_TOKEN}
 
+ oc project ${PROJECT_CPD_INSTANCE}
+
 cpd-cli manage oc get nodes
 
 cpd-cli manage apply-scc \
 --cpd_instance_ns=${PROJECT_CPD_INSTANCE} \
 --components=wkc
 
+following steps are not needed on IBM Cloud VPC-2
 ?? cpd-cli manage apply-crio --openshift-type=${OPENSHIFT_TYPE}
 ?? cpd-cli manage apply-db2-kubelet --openshift-type=${OPENSHIFT_TYPE}
 
-cpd-cli manage add-icr-cred-to-global-pull-secret ${IBM_ENTITLEMENT_KEY}
+following step is redundant to the openshift task for global registry cred. If Worker nodes are replaced - skip
+?? cpd-cli manage add-icr-cred-to-global-pull-secret ${IBM_ENTITLEMENT_KEY}
 
 cpd-cli manage apply-olm \
 --release=${VERSION} \

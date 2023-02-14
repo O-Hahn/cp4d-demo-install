@@ -2,9 +2,9 @@
 # Cloud Pak for Data installation variables
 #===============================================================================
 
-export OCP_URL=https://c115-e.eu-de.containers.cloud.ibm.com:32742
+export OCP_URL=https://c114-e.eu-de.containers.cloud.ibm.com:31213
 export IMAGE_ARCH=amd64
-export OCP_TOKEN=sha256~PtnVewwFD-N6gqbYjybY6Np4X_CzhXAAfCw-SgkVAfI
+export OCP_TOKEN=sha256~rDKkGp78p5z9D2GNPYqenIU3UACX21wkNf_fMRH7RGI
 export OPENSHIFT_TYPE=self-managed
 
 export STG_CLASS_BLOCK=ocs-storagecluster-ceph-rbd

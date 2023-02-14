@@ -6,4 +6,4 @@ alias kc="kubectl"
 alias cpd="cpd-cli"
 alias tf="terraform"
 
-source ~/cpd-demo/cpd-demo-env/cpd-demo-env.sh
+source ~/cp4d-demo-install/4_cpd-install/cpd-demo-env.sh
