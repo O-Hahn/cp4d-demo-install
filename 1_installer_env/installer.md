@@ -82,5 +82,5 @@ curl -sL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | 
 
 curl --progress-bar -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 
-### additional plugins
+### additional plugins install
 ibmcloud plugin repo-plugins

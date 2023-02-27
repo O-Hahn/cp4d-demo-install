@@ -1,17 +1,32 @@
 # OpenShift Environment customizing
 
+## Login into the environment of ibmcloud and openshift
+ibmcloud login --sso
+ibmcloud target -g demo
+oc login --token=xxx --server=yyy
+
 ## Apply global secret on ROKS 
 
 https://cloud.ibm.com/docs/openshift?topic=openshift-registry#cluster_global_pull_secret
 
 oc get secret pull-secret -n openshift-config --output="jsonpath={.data.\.dockerconfigjson}" | base64 --decode > dockerconfigjson
 
+echo -n "cp:REPLACE_WITH_GENERATED_ENTITLEMENT_KEY" | base64 -w0
+echo -n "cp:"+$IBM_ENTITLEMENT_KEY | base64 -w0
+
+oc get secret/pull-secret -n openshift-config -ojson | \
+jq -r '.data[".dockerconfigjson"]' | \
+base64 -d - | \
+jq '.[]."cp.icr.io" += input' - authority.json > temp_config.json
+oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson=temp_config.json
+
+
 insert the following lines into the dockerconfigjson - with the IBM Entitlement Key transformed into auth...
 "cp.icr.io": {
     "auth": "xxxxxxxxx"
 },
 
-oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson=dockerconfigjson-merged
+oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson=dockerconfigjson-new.json
 
 ## Replace worker nodes from the cluster after changing the global secrets for IBM Registry 
 export ROKS_CLUSTER_NAME=cpd
@@ -20,17 +35,8 @@ ibmcloud oc worker ls -c $ROKS_CLUSTER_NAME
 
 ibmcloud oc worker replace -c $ROKS_CLUSTER_NAME -w <workerID_1>
 
-ibmcloud oc worker replace -c $ROKS_CLUSTER_NAME -w kube-cfllmv8f0trmo105cvmg-cpd-cpdocs-00000ad7
-ibmcloud oc worker replace -c $ROKS_CLUSTER_NAME -w kube-cfllmv8f0trmo105cvmg-cpd-cpdocs-00000bd4
-ibmcloud oc worker replace -c $ROKS_CLUSTER_NAME -w kube-cfllmv8f0trmo105cvmg-cpd-cpdocs-00000cb8
-
-ibmcloud oc worker replace -c $ROKS_CLUSTER_NAME -w kube-cfllmv8f0trmo105cvmg-cpd-default-00000767 
-ibmcloud oc worker replace -c $ROKS_CLUSTER_NAME -w kube-cfllmv8f0trmo105cvmg-cpd-default-00000895 
-ibmcloud oc worker replace -c $ROKS_CLUSTER_NAME -w kube-cfllmv8f0trmo105cvmg-cpd-default-000009ed
 
 ## Install OCS / ODF Storage Foundation 
-
-oc login --token=xxx --server=yyy
 
 oc create -f ocs-namespace.yaml
 ibmcloud oc cluster addon enable openshift-data-foundation -c $ROKS_CLUSTER_NAME --version 4.10.0 --param "odfDeploy=false"
@@ -43,8 +49,8 @@ set the ip adresses from the list above onto the env
 
 ibmcloud oc workers --cluster $ROKS_CLUSTER_NAME --worker-pool $ROKS_CLUSTER_NAME-ocs
 
-export OCS_WORKER1=10.231.0.73
-export OCS_WORKER2=10.231.0.138
+export OCS_WORKER1=10.231.0.137
+export OCS_WORKER2=10.231.0.72
 export OCS_WORKER3=10.231.0.10
 
 ### Label and taint nodes for OFS
@@ -70,9 +76,10 @@ optional:
 
 ibmcloud resource service-key-create cos-cred-rw Writer --instance-name $ROKS_CLUSTER_NAME-cos --parameters '{"HMAC": true}'
 
-oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=<access_key_id> --from-literal=IBM_COS_SECRET_ACCESS_KEY=<secret_access_key>
+oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=<access_key_id> 
+--from-literal=IBM_COS_SECRET_ACCESS_KEY=<secret_access_key>
 
-oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=8a248d8b8f1149cab209239585ce6691 --from-literal=IBM_COS_SECRET_ACCESS_KEY=0700cd9646cccb8172ad92c7a8b161ea0406b4805dfa04bc
+oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=a61b257d82794a568fb75a0425e41a08 --from-literal=IBM_COS_SECRET_ACCESS_KEY=aa64e8ea628cbe7f59bb8ac949fc70cc45a8ff39b300059e
 
 oc get secrets -A | grep cos
 
