@@ -75,6 +75,9 @@ source ~/.zshrc
 
 ## Optional
 
+### Terraform 
+
+
 ### HELM
 curl -sL https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 

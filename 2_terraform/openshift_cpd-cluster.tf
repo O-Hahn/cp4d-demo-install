@@ -12,7 +12,7 @@ resource "ibm_container_vpc_cluster" "cpd_cluster" {
     entitlement  = "cloud_pak"
     vpc_id       = ibm_is_vpc.cpd_cluster.id
     
-    worker_count = "1"
+    worker_count = "2"
     resource_group_id = data.ibm_resource_group.target_rg.id
     disable_public_service_endpoint = false
 

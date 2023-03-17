@@ -2,9 +2,10 @@
 # Cloud Pak for Data installation variables
 #===============================================================================
 
-export OCP_URL=https://c113-e.eu-de.containers.cloud.ibm.com:31955
+export OCP_VPC=cpd
+export OCP_URL=https://c100-e.eu-de.containers.cloud.ibm.com:32635
 export IMAGE_ARCH=amd64
-export OCP_TOKEN=sha256~VOSxZEiODXK4ZOnbVeT0NEmYJuXUnpuC3Fi1Hi3-nC8
+export OCP_TOKEN=sha256~VXAHivqhzczYpNCw7kX4f05G4RdoFAa7Vnd18U9w390 
 export OPENSHIFT_TYPE=roks
 
 export STG_CLASS_BLOCK=ocs-storagecluster-ceph-rbd
@@ -15,7 +16,7 @@ export PROJECT_CPFS_OPS=ibm-common-services
 export PROJECT_CPD_OPS=ibm-common-services
 export PROJECT_CPD_INSTANCE=zen-46
 
-export VERSION=4.6.1
+export VERSION=4.6.3
 
 export IBM_ENTITLEMENT_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE2Njc5ODQzNDksImp0aSI6ImJlN2E3YzlkOGU3YjQ4MTZiYmE5NmY3N2E5ZTUzNGYxIn0._Y3fZkFCn7n1sxpGoRJxJyhqadvXrh6qHLCN3TwCqDQ
 

@@ -12,6 +12,6 @@ spec:
   billingType: advanced
   ocsUpgrade: false
   workerNodes:
-  - 10.231.0.137
   - 10.231.0.72
-  - 10.231.0.10
+  - 10.231.0.136
+  - 10.231.0.8

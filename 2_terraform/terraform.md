@@ -2,7 +2,7 @@
 in the terraform folder - edit the tf files to adjust your environment - at least the variables.auto.tfvars file.
 
 ## Customize Terraform
-cd 1_terraform
+cd 2_terraform
 cp example.variables.auto.tfvars variables.auto.tfvars
 nano variables.auto.tfvars
 

@@ -1,5 +1,0 @@
-{
-  "auth": "REPLACE_WITH_BASE64_ENCODED_KEY_FROM_PREVIOUS_STEP",
-  "username":"cp",
-  "password":"REPLACE_WITH_GENERATED_ENTITLEMENT_KEY"
-}
