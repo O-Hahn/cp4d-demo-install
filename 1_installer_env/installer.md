@@ -58,13 +58,21 @@ https://docs.openshift.com/container-platform/4.11/cli_reference/openshift_cli/g
 ## Get the CPD CLI
 check if newer version of cpd-cli is release - download the corresponding to your cpd-cluster version
 
-wget https://github.com/IBM/cpd-cli/releases/download/v12.0.2/cpd-cli-linux-EE-12.0.2.tgz
+wget https://github.com/IBM/cpd-cli/releases/cpd-cli-linux-EE-12.0.6.tgz
 
 mkdir -p $HOME/.local/bin
 cd $HOME/.local
-tar -xvzf $HOME/cpd-cli-linux-EE-12.0.2.tgz
 
 sudo usermod -aG docker cloudpakclassic
+
+
+## Terraform 
+sudo apt install  software-properties-common gnupg2 curl
+curl https://apt.releases.hashicorp.com/gpg | gpg --dearmor > hashicorp.gpg
+
+sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+sudo apt install terraform
 
 ## Append to .zshrc
 enhance .bashrc or .zshrc with the customization for the CLIs 
@@ -73,9 +81,9 @@ copy the add_to_zshrc.sh into the local .zshrc or .bashrc - modify the path to t
 
 source ~/.zshrc
 
-## Optional
 
-### Terraform 
+
+## Optional
 
 
 ### HELM
