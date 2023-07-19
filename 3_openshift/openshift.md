@@ -46,7 +46,7 @@ done
 ## Install OCS / ODF Storage Foundation 
 ```
 oc create -f ocs-namespace.yaml
-ibmcloud oc cluster addon enable openshift-data-foundation -c $OCP_VPC --version 4.10.0 --param "odfDeploy=false"
+ibmcloud oc cluster addon enable openshift-data-foundation -c $OCP_VPC --version 4.12.0 --param "odfDeploy=false"
 
 check if health status is ready:
 ibmcloud oc cluster addon get --addon openshift-data-foundation --cluster $OCP_VPC
@@ -77,9 +77,17 @@ ibmcloud resource service-key-create cos-cred-rw Writer --instance-name $OCP_VPC
 oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=<access_key_id> 
 --from-literal=IBM_COS_SECRET_ACCESS_KEY=<secret_access_key>
 
-oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=11c837e38c91485fa6ce3c4ab75c281b --from-literal=IBM_COS_SECRET_ACCESS_KEY=16b8c335e9656d906886cdd8de1a02638043d931903b5703
+oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=c59c201699db46cd8b96c7512d67a55e --from-literal=IBM_COS_SECRET_ACCESS_KEY=05b1a2980b3a93145ab54f340d2023d8900a93fabcc22890
 
 oc get secrets -A | grep cos
+
+```
+### Append Noobar Secrets to the 
+```
+oc get secrets --namespace=openshift-storage
+
+export NOOBAA_ACCOUNT_CREDENTIALS_SECRET=noobaa-admin
+export NOOBAA_ACCOUNT_CERTIFICATE_SECRET=noobaa-s3-serving-cert
 ```
 
 ### Create the ODF cluster
@@ -99,8 +107,26 @@ oc create -f ocs-cluster.yaml
 oc describe ocscluster ocs
 ```
 
+## QUAY 
 
+```
+oc create -f quay-namespace.yaml
+```
 
+- Install QUAY from Operator-Hub (RedHat) into quey-enterprise namespace. 
+- Create a quay instance by deleting the spec in the quay-yaml and give it a name like "cp4d-registry".
+- Wait to become ready 
+- Create first User with the gui 
+- create a /etc/docker/daemon.json file with 
+
+daemon.json:
+{
+  "insecure-registries" : ["quay.example.com"]
+}
+
+## GitOps
+
+## 
 
 
 # Additional Temp Infos & Tries

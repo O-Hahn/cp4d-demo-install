@@ -1,6 +1,8 @@
-# Install CP4D
+# Install CP4D 4.7
+https://www.ibm.com/docs/en/cloud-paks/cp-data/4.7.x?topic=installing
 
-https://www.ibm.com/docs/en/cloud-paks/cp-data/4.6.x?topic=installing
+## select right directory for all logs
+cd ~/Git/cpd-demo-install
 
 ## Prepare the CPD environment
 Edit the cpd-demo-env.sh file with your credentials and informations. 
@@ -16,9 +18,17 @@ source ~/.zshrc
 
 oc new-project ${PROJECT_CPFS_OPS}
 oc new-project ${PROJECT_CPD_INSTANCE}
+
+oc new-project ${PROJECT_CPD_INST_OPERATORS}
+oc new-project ${PROJECT_CPD_INST_OPERANDS}
+
+oc new-project ${PROJECT_CERT_MANAGER}
+oc new-project ${PROJECT_LICENSE_SERVICE}
+oc new-project ${PROJECT_SCHEDULING_SERVICE}
+
 ``` 
 
-## Install CP4D Common Services
+## Install CP4D Base and Common Services
 
 ``` 
 cpd-cli manage login-to-ocp \
@@ -27,11 +37,99 @@ cpd-cli manage login-to-ocp \
 
 oc project ${PROJECT_CPD_INSTANCE}
 
+cpd-cli manage apply-cluster-components \
+--release=${VERSION} \
+--license_acceptance=true \
+--cert_manager_ns=${PROJECT_CERT_MANAGER} \
+--licensing_ns=${PROJECT_LICENSE_SERVICE}
+
+cpd-cli manage apply-scheduler \
+--release=${VERSION} \
+--license_acceptance=true \
+--scheduler_ns=${PROJECT_SCHEDULING_SERVICE}
+
+cpd-cli manage authorize-instance-topology \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+
+cpd-cli manage setup-mcg \
+--components=watson_ks \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--noobaa_account_secret=${NOOBAA_ACCOUNT_CREDENTIALS_SECRET} \
+--noobaa_cert_secret=${NOOBAA_ACCOUNT_CERTIFICATE_SECRET}
+
+cpd-cli manage apply-olm \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--components=cpd_platform
+
+cpd-cli manage apply-db2-kubelet
+
+``` 
+
+### copy parameter adoption file for the installer (especially for WKC)
+
+```
+mkdir cpd-cli-workspace/work
+cp 4_cpd-install/install-options.yml cpd-cli-workspace/work/. 
+
+``` 
+
+### Install the CP4D with its services
+
+``` 
+cpd-cli manage apply-cr \
+--release=${VERSION} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--components=${COMPONENTS} \
+--block_storage_class=${STG_CLASS_BLOCK} \
+--file_storage_class=${STG_CLASS_FILE} \
+--license_acceptance=true
+
+cpd-cli manage get-cpd-instance-details \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+
+cpd-cli manage get-cpd-instance-details \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--get_admin_initial_credentials=true
+
+``` 
+
+### If air-gap with quay
+
+``` 
+cpd-cli manage login-private-registry \
+${PRIVATE_REGISTRY_LOCATION} \
+${PRIVATE_REGISTRY_PUSH_USER} \
+${PRIVATE_REGISTRY_PUSH_PASSWORD}
+
+cpd-cli manage list-images \
+--components=${COMPONENTS} \
+--release=${VERSION} \
+--inspect_source_registry=true
+
+grep "level=fatal" list_images.csv
+
+sed -e '/gpu/d' ./cpd-cli-workspace/olm-utils-workspace/work/offline/${VERSION}/ibm-wsl-runtimes-*-images.csv
+
+sed -e /nlp/d' ./cpd-cli-workspace/olm-utils-workspace/work/offline/${VERSION}/ibm-wsl-runtimes-*-images.csv
+
+
+cpd-cli manage apply-icsp \
+--registry=${PRIVATE_REGISTRY_LOCATION}
+
+``` 
+
+### install WKC before 4.7
+
+https://www.ibm.com/docs/en/cloud-paks/cp-data/4.6.x?topic=installing
+
+``` 
 cpd-cli manage oc get nodes
 
-cpd-cli manage apply-scc \
---cpd_instance_ns=${PROJECT_CPD_INSTANCE} \
---components=wkc
+#cpd-cli manage apply-scc \
+#--cpd_instance_ns=${PROJECT_CPD_INSTANCE} \
+#--components=wkc
 ``` 
 
 following steps are not needed on IBM Cloud VPC-2
@@ -43,8 +141,34 @@ following step is redundant to the openshift task for global registry cred. If W
 ?? cpd-cli manage add-icr-cred-to-global-pull-secret ${IBM_ENTITLEMENT_KEY}
 ``` 
 
+### Install the foundational services
+``` 
+
+cpd-cli manage setup-instance-topology \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--license_acceptance=true
+
+``` 
+
+
 ### Customize Environment for WKC
 for WKC Install you need a special config during install for DB2 - therefore copy install-opitons file into the cpd-cli-workspace folder
+
+``` 
+oc apply -f - <<EOF
+apiVersion: v1
+data:
+  DB2U_RUN_WITH_LIMITED_PRIVS: "false"
+kind: ConfigMap
+metadata:
+  name: db2u-product-cm
+  namespace: ${PROJECT_CPD_INST_OPERATORS}
+EOF
+``` 
+
+### Old version needed 4.6.x
 
 ``` 
 cp 4_cpd-install/install-options.yml cpd-cli-workspace/olm-utils-workspace/work/.
@@ -57,7 +181,39 @@ To add for DB2 special tuning parameters (-m 50 means limit to 50GiB)
 ./cpd-crt-tune.sh -m 50 -c
 ``` 
 
-### Install the common services
+### Install the common services 4.7.x and CP4D with its components
+``` 
+
+cpd-cli manage setup-instance-topology \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--license_acceptance=true
+
+cpd-cli manage get-license \
+--release=${VERSION} \
+--license-type=EE
+
+cpd-cli manage apply-olm \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--components=${COMPONENTS}
+
+cpd-cli manage apply-cr \
+--release=${VERSION} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--components=${COMPONENTS} \
+--block_storage_class=${STG_CLASS_BLOCK} \
+--file_storage_class=${STG_CLASS_FILE} \
+--license_acceptance=true
+
+cpd-cli manage get-cr-status \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+
+``` 
+
+### Install the common services 4.6.x
+
 ``` 
 cpd-cli manage apply-olm \
 --release=${VERSION} \

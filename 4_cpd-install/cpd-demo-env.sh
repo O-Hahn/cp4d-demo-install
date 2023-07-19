@@ -2,11 +2,13 @@
 # Cloud Pak for Data installation variables
 #===============================================================================
 
-export OCP_VPC=cpd
-export OCP_URL=https://c100-e.eu-de.containers.cloud.ibm.com:32635
+export OCP_VPC=cp4d
+export OCP_URL=https://c115-e.eu-de.containers.cloud.ibm.com:31139
 export IMAGE_ARCH=amd64
-export OCP_TOKEN=sha256~VXAHivqhzczYpNCw7kX4f05G4RdoFAa7Vnd18U9w390 
+export OCP_TOKEN=sha256~g9faQH-wHgWDm0n-aoYYi0VxnBe-XQXtaQmSZe4866k 
 export OPENSHIFT_TYPE=roks
+
+export CPD_CLI_MANAGE_WORKSPACE=/home/developer/Git/cp4d-demo-install
 
 export STG_CLASS_BLOCK=ocs-storagecluster-ceph-rbd
 export STG_CLASS_FILE=ocs-storagecluster-cephfs
@@ -14,13 +16,26 @@ export STG_CLASS_FILE=ocs-storagecluster-cephfs
 export PROJECT_CATSRC=openshift-marketplace
 export PROJECT_CPFS_OPS=ibm-common-services        
 export PROJECT_CPD_OPS=ibm-common-services
-export PROJECT_CPD_INSTANCE=zen-46
+export PROJECT_CPD_INSTANCE=zen-47
 
-export VERSION=4.6.3
+export PROJECT_CERT_MANAGER=ibm-cert-manager
+export PROJECT_LICENSE_SERVICE=ibm-licensing
+export PROJECT_SCHEDULING_SERVICE=cpd-scheduler
+export PROJECT_CPD_INST_OPERATORS=ibm-common-services
+export PROJECT_CPD_INST_OPERANDS=zen-47
+
+export NOOBAA_ACCOUNT_CREDENTIALS_SECRET=noobaa-admin
+export NOOBAA_ACCOUNT_CERTIFICATE_SECRET=noobaa-s3-serving-cert
+
+# export PRIVATE_REGISTRY_LOCATION=local-reg-quay-quay.cp4d-443210-0e5faca49082f37aff4ae4e3f0d1a4a7-0000.eu-de.containers.appdomain.cloud
+# export PRIVATE_REGISTRY_PUSH_USER=cp4d
+# export PRIVATE_REGISTRY_PUSH_PASSWORD=Cp4D2Ibm#
+
+export VERSION=4.7.0
 
 export IBM_ENTITLEMENT_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE2Njc5ODQzNDksImp0aSI6ImJlN2E3YzlkOGU3YjQ4MTZiYmE5NmY3N2E5ZTUzNGYxIn0._Y3fZkFCn7n1sxpGoRJxJyhqadvXrh6qHLCN3TwCqDQ
 
-export COMPONENTS=cpfs,cpd_platform,wkc,dv,wml,ws
+export COMPONENTS=ibm-cert-manager,ibm-licensing,cpfs,cpd_platform,wkc,dv,wml,ws
 
 # ------------------------------------------------------------------------------
 # Additional and other customizing

@@ -5,7 +5,7 @@ resource "ibm_container_vpc_cluster" "cpd_cluster" {
 
     cos_instance_crn = ibm_resource_instance.cpd_cluster_cos.id
     
-    kube_version = "4.10_openshift"
+    kube_version = "4.12_openshift"
     flavor       = "bx2.16x64"
     secondary_storage= "900gb.5iops-tier"
     
