@@ -31,3 +31,6 @@ override.tf.json
 
 # Local cpd-cli-workspace directories
 **/cpd-cli-workspace/*
+
+# ssh-keys
+**/ssh-key/*

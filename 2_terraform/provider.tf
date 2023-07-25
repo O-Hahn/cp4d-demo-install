@@ -1,4 +1,5 @@
 variable "ibmcloud_api_key" {}
+variable "vpc" {}
 variable "region" {}
 variable "resource_group" {}
 variable "cluster_name" {}

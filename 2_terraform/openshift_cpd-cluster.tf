@@ -10,7 +10,7 @@ resource "ibm_container_vpc_cluster" "cpd_cluster" {
     secondary_storage= "900gb.5iops-tier"
     
     entitlement  = "cloud_pak"
-    vpc_id       = ibm_is_vpc.cpd_cluster.id
+    vpc_id       = ibm_is_vpc.cpd_vpc.id
     
     worker_count = "2"
     resource_group_id = data.ibm_resource_group.target_rg.id
@@ -24,17 +24,17 @@ resource "ibm_container_vpc_cluster" "cpd_cluster" {
     }
 
     zones {
-        subnet_id = ibm_is_subnet.cpd_cluster_subnet_zone_1.id
+        subnet_id = ibm_is_subnet.cpd_vpc_subnet_zone_1.id
         name      = "${var.region}-1"
     }
 
     zones {
-        subnet_id = ibm_is_subnet.cpd_cluster_subnet_zone_2.id
+        subnet_id = ibm_is_subnet.cpd_vpc_subnet_zone_2.id
         name      = "${var.region}-2"
     }
 
     zones {
-        subnet_id = ibm_is_subnet.cpd_cluster_subnet_zone_3.id
+        subnet_id = ibm_is_subnet.cpd_vpc_subnet_zone_3.id
         name      = "${var.region}-3"
     }
 }
@@ -44,7 +44,7 @@ resource "ibm_container_vpc_worker_pool" "cpd_cluster_ocs" {
     
     worker_pool_name  = "${var.cluster_name}-ocs"
     flavor       = "bx2.16x64"
-    vpc_id       = ibm_is_vpc.cpd_cluster.id
+    vpc_id       = ibm_is_vpc.cpd_vpc.id
     worker_count      = "1"
     resource_group_id = data.ibm_resource_group.target_rg.id
 
@@ -53,17 +53,17 @@ resource "ibm_container_vpc_worker_pool" "cpd_cluster_ocs" {
     }
 
     zones {
-        subnet_id = ibm_is_subnet.cpd_cluster_subnet_zone_1.id
+        subnet_id = ibm_is_subnet.cpd_vpc_subnet_zone_1.id
         name      = "${var.region}-1"
     }
 
     zones {
-        subnet_id = ibm_is_subnet.cpd_cluster_subnet_zone_2.id
+        subnet_id = ibm_is_subnet.cpd_vpc_subnet_zone_2.id
         name      = "${var.region}-2"
     }
 
     zones {
-        subnet_id = ibm_is_subnet.cpd_cluster_subnet_zone_3.id
+        subnet_id = ibm_is_subnet.cpd_vpc_subnet_zone_3.id
         name      = "${var.region}-3"
     }
 

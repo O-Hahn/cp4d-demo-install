@@ -23,6 +23,7 @@ https://myibm.ibm.com/products-services/containerlibrary
 
 See also: https://cloud.ibm.com/docs/openshift?topic=openshift-registry#cluster_global_pull_secret
 
+if running the script - the replacement is done automatically
 ```
 export IBM_ENTITLEMENT_KEY=....yourkey....
 
@@ -30,6 +31,7 @@ export IBM_ENTITLEMENT_KEY=....yourkey....
 ```
 
 ## Replace worker nodes from the cluster after changing the global secrets for IBM Registry 
+only needed if script is not called ... 
 
 ```
 ibmcloud oc worker ls -c $OCP_VPC 
