@@ -2,10 +2,10 @@
 # Cloud Pak for Data installation variables
 #===============================================================================
 
-export OCP_VPC=cp4d
-export OCP_URL=https://c115-e.eu-de.containers.cloud.ibm.com:31139
+export OCP_VPC=cpd
+export OCP_URL=https://c113-e.eu-de.containers.cloud.ibm.com:31369
 export IMAGE_ARCH=amd64
-export OCP_TOKEN=sha256~g9faQH-wHgWDm0n-aoYYi0VxnBe-XQXtaQmSZe4866k 
+export OCP_TOKEN=sha256~2zbE_Rl0HaqzXOYnbwRtcsU75rAkHNQvNSbj_a9hma4 
 export OPENSHIFT_TYPE=roks
 
 export CPD_CLI_MANAGE_WORKSPACE=/home/developer/Git/cp4d-demo-install
@@ -35,7 +35,7 @@ export VERSION=4.7.0
 
 export IBM_ENTITLEMENT_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE2Njc5ODQzNDksImp0aSI6ImJlN2E3YzlkOGU3YjQ4MTZiYmE5NmY3N2E5ZTUzNGYxIn0._Y3fZkFCn7n1sxpGoRJxJyhqadvXrh6qHLCN3TwCqDQ
 
-export COMPONENTS=ibm-cert-manager,ibm-licensing,cpfs,cpd_platform,wkc,dv,wml,ws
+export COMPONENTS=ibm-cert-manager,ibm-licensing,cpfs,cpd_platform,wkc,dv,wml,ws,
 
 # ------------------------------------------------------------------------------
 # Additional and other customizing
