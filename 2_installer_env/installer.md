@@ -100,8 +100,13 @@ mv oc /usr/local/bin
 
 ## Get the CPD CLI
 check if newer version of cpd-cli is release - download the corresponding to your cpd-cluster version
+https://github.com/IBM/cpd-cli/releases
 
-wget https://github.com/IBM/cpd-cli/releases/cpd-cli-linux-EE-12.0.6.tgz
+wget https://github.com/IBM/cpd-cli/releases/download/v13.0.0/cpd-cli-linux-EE-13.0.0.tgz
+
+mkdir ~/Git/cpd-cli
+tar xvf cpd-cli-linux-EE-13.0.0.tgz 
+mv cpd-cli-linux-EE-13.0.0-9/* ~/Git/cpd-cli
 
 mkdir -p $HOME/.local/bin
 cd $HOME/.local
@@ -115,6 +120,11 @@ curl https://apt.releases.hashicorp.com/gpg | gpg --dearmor > hashicorp.gpg
 sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 
 sudo apt install terraform
+
+## Git clone of cp4d-demo-install
+mkdir Git
+cd Git
+git clone https://github.com/O-Hahn/cp4d-demo-install.git
 
 ## Append to .zshrc
 enhance .bashrc or .zshrc with the customization for the CLIs 

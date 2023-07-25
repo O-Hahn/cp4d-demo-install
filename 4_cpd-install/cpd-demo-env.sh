@@ -8,20 +8,16 @@ export IMAGE_ARCH=amd64
 export OCP_TOKEN=sha256~2zbE_Rl0HaqzXOYnbwRtcsU75rAkHNQvNSbj_a9hma4 
 export OPENSHIFT_TYPE=roks
 
-export CPD_CLI_MANAGE_WORKSPACE=/home/developer/Git/cp4d-demo-install
+export CPD_CLI_MANAGE_WORKSPACE=/root/Git/cp4d-demo-install
 
 export STG_CLASS_BLOCK=ocs-storagecluster-ceph-rbd
 export STG_CLASS_FILE=ocs-storagecluster-cephfs
 
-export PROJECT_CATSRC=openshift-marketplace
-export PROJECT_CPFS_OPS=ibm-common-services        
-export PROJECT_CPD_OPS=ibm-common-services
-export PROJECT_CPD_INSTANCE=zen-47
-
 export PROJECT_CERT_MANAGER=ibm-cert-manager
 export PROJECT_LICENSE_SERVICE=ibm-licensing
-export PROJECT_SCHEDULING_SERVICE=cpd-scheduler
-export PROJECT_CPD_INST_OPERATORS=ibm-common-services
+export PROJECT_SCHEDULING_SERVICE=cpd-schedule
+
+export PROJECT_CPD_INST_OPERATORS=ibm-cpd-operators
 export PROJECT_CPD_INST_OPERANDS=zen-47
 
 export NOOBAA_ACCOUNT_CREDENTIALS_SECRET=noobaa-admin
@@ -35,7 +31,7 @@ export VERSION=4.7.0
 
 export IBM_ENTITLEMENT_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE2Njc5ODQzNDksImp0aSI6ImJlN2E3YzlkOGU3YjQ4MTZiYmE5NmY3N2E5ZTUzNGYxIn0._Y3fZkFCn7n1sxpGoRJxJyhqadvXrh6qHLCN3TwCqDQ
 
-export COMPONENTS=ibm-cert-manager,ibm-licensing,cpfs,cpd_platform,wkc,dv,wml,ws,
+export COMPONENTS=ibm-cert-manager,ibm-licensing,cpfs,cpd_platform,wkc,dv,wml,ws,openscale,ws_pipelines
 
 # ------------------------------------------------------------------------------
 # Additional and other customizing

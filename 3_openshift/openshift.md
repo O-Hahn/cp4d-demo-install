@@ -79,7 +79,7 @@ ibmcloud resource service-key-create cos-cred-rw Writer --instance-name $OCP_VPC
 oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=<access_key_id> 
 --from-literal=IBM_COS_SECRET_ACCESS_KEY=<secret_access_key>
 
-oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=c59c201699db46cd8b96c7512d67a55e --from-literal=IBM_COS_SECRET_ACCESS_KEY=05b1a2980b3a93145ab54f340d2023d8900a93fabcc22890
+oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=94f2b9804e94494aad5db25d2f3bb02b --from-literal=IBM_COS_SECRET_ACCESS_KEY=86568361b02092fce3cbfd4febecb5ed27595d48cee1cd37
 
 oc get secrets -A | grep cos
 
@@ -171,10 +171,10 @@ oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson
 ### Label and taint nodes for OFS
 
 ```
-ibmcloud oc workers --cluster $ROKS_CLUSTER_NAME --worker-pool $ROKS_CLUSTER_NAME-ocs
+ibmcloud oc workers --cluster $OCP_VPC --worker-pool $OCP_VPC-ocs
 
-export OCS_WORKER1=10.231.0.137
-export OCS_WORKER2=10.231.0.72
+export OCS_WORKER1=10.231.0.132
+export OCS_WORKER2=10.231.0.68
 export OCS_WORKER3=10.231.0.10
 
 oc label node --overwrite $OCS_WORKER1 node-role.kubernetes.io/infra=""

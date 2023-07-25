@@ -2,7 +2,7 @@
 https://www.ibm.com/docs/en/cloud-paks/cp-data/4.7.x?topic=installing
 
 ## select right directory for all logs
-cd ~/Git/cpd-demo-install
+cd ~/Git/cp4d-demo-install
 
 ## Prepare the CPD environment
 Edit the cpd-demo-env.sh file with your credentials and informations. 
@@ -15,9 +15,6 @@ cpd-cli manage login-to-ocp \
 nano /cpd-demo-env/cpd-demo-env.sh
 source /cpd-demo-env/cpd-demo-env.sh
 source ~/.zshrc
-
-oc new-project ${PROJECT_CPFS_OPS}
-oc new-project ${PROJECT_CPD_INSTANCE}
 
 oc new-project ${PROJECT_CPD_INST_OPERATORS}
 oc new-project ${PROJECT_CPD_INST_OPERANDS}
@@ -48,15 +45,30 @@ cpd-cli manage apply-scheduler \
 --license_acceptance=true \
 --scheduler_ns=${PROJECT_SCHEDULING_SERVICE}
 
-cpd-cli manage authorize-instance-topology \
+cpd-cli manage setup-instance-topology \
+--release=${VERSION} \
 --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
---cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--license_acceptance=true
+
+cpd-cli manage setup-mcg \
+--components=watson_assistant \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--noobaa_account_secret=${NOOBAA_ACCOUNT_CREDENTIALS_SECRET} \
+--noobaa_cert_secret=${NOOBAA_ACCOUNT_CERTIFICATE_SECRET}
+
+cpd-cli manage setup-mcg \
+--components=watson_discovery \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--noobaa_account_secret=${NOOBAA_ACCOUNT_CREDENTIALS_SECRET} \
+--noobaa_cert_secret=${NOOBAA_ACCOUNT_CERTIFICATE_SECRET}
 
 cpd-cli manage setup-mcg \
 --components=watson_ks \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
 --noobaa_account_secret=${NOOBAA_ACCOUNT_CREDENTIALS_SECRET} \
 --noobaa_cert_secret=${NOOBAA_ACCOUNT_CERTIFICATE_SECRET}
+
 
 cpd-cli manage apply-olm \
 --release=${VERSION} \
