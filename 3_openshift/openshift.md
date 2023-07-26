@@ -76,10 +76,13 @@ ibmcloud resource service-instance-create $OCP_VPC-ocs cloud-object-storage stan
 ```
 ibmcloud resource service-key-create cos-cred-rw Writer --instance-name $OCP_VPC-cos --parameters '{"HMAC": true}'
 
+export ACCESS_KEY_ID=fae94da02dbf47678d488e06f2f000bf
+export SECRET_ACCESS_KEY=a3c04239492a46cff32db0f6a790cb7eda389148992feedb
+
 oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=<access_key_id> 
 --from-literal=IBM_COS_SECRET_ACCESS_KEY=<secret_access_key>
 
-oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=94f2b9804e94494aad5db25d2f3bb02b --from-literal=IBM_COS_SECRET_ACCESS_KEY=86568361b02092fce3cbfd4febecb5ed27595d48cee1cd37
+oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=$ACCESS_KEY_ID --from-literal=IBM_COS_SECRET_ACCESS_KEY=$SECRET_ACCESS_KEY
 
 oc get secrets -A | grep cos
 
@@ -169,6 +172,8 @@ oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson
 ```
 
 ### Label and taint nodes for OFS
+
+optional: if not done with script
 
 ```
 ibmcloud oc workers --cluster $OCP_VPC --worker-pool $OCP_VPC-ocs

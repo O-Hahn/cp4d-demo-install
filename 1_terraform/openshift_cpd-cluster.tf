@@ -37,6 +37,7 @@ resource "ibm_container_vpc_cluster" "cpd_cluster" {
         subnet_id = ibm_is_subnet.cpd_vpc_subnet_zone_3.id
         name      = "${var.region}-3"
     }
+    depends_on = [ibm_is_instance.cpd_bridgehead]
 }
 
 resource "ibm_container_vpc_worker_pool" "cpd_cluster_ocs" {

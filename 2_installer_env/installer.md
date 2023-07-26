@@ -47,6 +47,11 @@ sudo apt install zsh
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+
+### Install IBM Cloud Dev Environment
+curl -sL https://ibm.biz/idt-installer | bash
+
+
 ### Install Docker on the workstaion
 sudo apt-get remove docker docker-engine docker.io containerd runc
 
@@ -79,8 +84,6 @@ sudo chmod g+rwx "$HOME/.docker" -R
 
 sudo reboot
 
-### Install IBM Cloud Dev Environment
-curl -sL https://ibm.biz/idt-installer | bash
 
 ### Install IBM Cloud CLI
 
@@ -104,6 +107,7 @@ https://github.com/IBM/cpd-cli/releases
 
 wget https://github.com/IBM/cpd-cli/releases/download/v13.0.0/cpd-cli-linux-EE-13.0.0.tgz
 
+mkdir ~/Git
 mkdir ~/Git/cpd-cli
 tar xvf cpd-cli-linux-EE-13.0.0.tgz 
 mv cpd-cli-linux-EE-13.0.0-9/* ~/Git/cpd-cli
@@ -114,12 +118,9 @@ cd $HOME/.local
 sudo usermod -aG docker cloudpakclassic
 
 ## Terraform 
-sudo apt install  software-properties-common gnupg2 curl
-curl https://apt.releases.hashicorp.com/gpg | gpg --dearmor > hashicorp.gpg
-
-sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-
-sudo apt install terraform
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
 
 ## Git clone of cp4d-demo-install
 mkdir Git

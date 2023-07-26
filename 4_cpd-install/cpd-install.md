@@ -8,13 +8,13 @@ cd ~/Git/cp4d-demo-install
 Edit the cpd-demo-env.sh file with your credentials and informations. 
 
 ``` 
-cpd-cli manage login-to-ocp \
---server=${OCP_URL} \
---token=${OCP_TOKEN}
-
 nano /cpd-demo-env/cpd-demo-env.sh
 source /cpd-demo-env/cpd-demo-env.sh
 source ~/.zshrc
+
+cpd-cli manage login-to-ocp \
+--server=${OCP_URL} \
+--token=${OCP_TOKEN}
 
 oc new-project ${PROJECT_CPD_INST_OPERATORS}
 oc new-project ${PROJECT_CPD_INST_OPERANDS}
@@ -45,11 +45,9 @@ cpd-cli manage apply-scheduler \
 --license_acceptance=true \
 --scheduler_ns=${PROJECT_SCHEDULING_SERVICE}
 
-cpd-cli manage setup-instance-topology \
---release=${VERSION} \
+cpd-cli manage authorize-instance-topology \
 --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
---cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
---license_acceptance=true
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 
 cpd-cli manage setup-mcg \
 --components=watson_assistant \
@@ -69,27 +67,45 @@ cpd-cli manage setup-mcg \
 --noobaa_account_secret=${NOOBAA_ACCOUNT_CREDENTIALS_SECRET} \
 --noobaa_cert_secret=${NOOBAA_ACCOUNT_CERTIFICATE_SECRET}
 
+cpd-cli manage setup-instance-topology \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--license_acceptance=true
+
+oc apply -f - <<EOF
+apiVersion: v1
+data:
+  DB2U_RUN_WITH_LIMITED_PRIVS: "false"
+kind: ConfigMap
+metadata:
+  name: db2u-product-cm
+  namespace: ${PROJECT_CPD_INST_OPERATORS}
+EOF
+
+cp 4_cpd-install/install-options.yml ${CPD_CLI_MANAGE_WORKSPACE}/work/. 
 
 cpd-cli manage apply-olm \
 --release=${VERSION} \
 --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
---components=cpd_platform
+--components=${COMPONENTS}
 
 cpd-cli manage apply-db2-kubelet
-
-``` 
-
-### copy parameter adoption file for the installer (especially for WKC)
-
-```
-mkdir cpd-cli-workspace/work
-cp 4_cpd-install/install-options.yml cpd-cli-workspace/work/. 
 
 ``` 
 
 ### Install the CP4D with its services
 
 ``` 
+
+cpd-cli manage apply-cr \
+--release=${VERSION} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--components=cpd_platform \
+--block_storage_class=${STG_CLASS_BLOCK} \
+--file_storage_class=${STG_CLASS_FILE} \
+--license_acceptance=true
+
 cpd-cli manage apply-cr \
 --release=${VERSION} \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
