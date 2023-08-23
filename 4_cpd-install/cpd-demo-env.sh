@@ -5,7 +5,7 @@
 export OCP_VPC=cpd
 export OCP_URL=https://c115-e.eu-de.containers.cloud.ibm.com:30116
 export IMAGE_ARCH=amd64
-export OCP_TOKEN=sha256~MVADhUM1L1oIOUXu3imYuLe6UNBWsHTzdH9H3A3_TgQ
+export OCP_TOKEN=sha256~FXxn5FY-9cEcUgzlXA0tRM95ZtiPVFohbXLp9ZJKm94
 export OPENSHIFT_TYPE=roks
 
 export CPD_CLI_MANAGE_WORKSPACE=/root/Git/cp4d-demo-install
@@ -27,7 +27,7 @@ export NOOBAA_ACCOUNT_CERTIFICATE_SECRET=noobaa-s3-serving-cert
 # export PRIVATE_REGISTRY_PUSH_USER=cp4d
 # export PRIVATE_REGISTRY_PUSH_PASSWORD=Cp4D2Ibm#
 
-export VERSION=4.7.0
+export VERSION=4.7.1
 
 export IBM_ENTITLEMENT_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE2Njc5ODQzNDksImp0aSI6ImJlN2E3YzlkOGU3YjQ4MTZiYmE5NmY3N2E5ZTUzNGYxIn0._Y3fZkFCn7n1sxpGoRJxJyhqadvXrh6qHLCN3TwCqDQ
 

@@ -101,6 +101,19 @@ wget https://downloads-openshift-console.SERVERNAME.eu-de.containers.appdomain.c
 tar xvf oc.tar
 mv oc /usr/local/bin
 
+## Install ITZ Integration-CLI
+curl https://raw.githubusercontent.com/cloud-native-toolkit/itzcli/main/scripts/install.sh | bash -
+
+on Mac:
+brew tap cloud-native-toolkit/homebrew-techzone
+brew install itz
+
+## Cloud-Native-Toolkit
+see: https://develop.cloudnativetoolkit.dev/setup/fast-start/
+
+curl -sfL get.cloudnativetoolkit.dev | sh -
+
+
 ## Get the CPD CLI
 check if newer version of cpd-cli is release - download the corresponding to your cpd-cluster version
 https://github.com/IBM/cpd-cli/releases

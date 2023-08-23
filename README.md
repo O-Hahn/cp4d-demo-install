@@ -11,6 +11,10 @@ The installation of CP4D is done within the bridgehead server environment.
 
 ## Steps
 
+### Option 1: Single Node Openshift on TechZone + CP4D 
+* [Single Node OpenShfit](./2_installer_env/SNO-Cluster.md)
+
+### Option 2: Large IBM ROKS Cluster 
 * [Create IBM Cluster with Terraform](./1_terraform/terraform.md)
 
 * [Install VM for CP4D-Install](./2_installer_env/installer.md)
