@@ -11,7 +11,7 @@ mkdir ssh-key
 cd ssh-key
 
 ssh-keygen -t ed25519 -b 4096 -C "cpd-admin"
-ibmcloud is key-create cpd-admin @cpdadmin-id_ed25519.pub --resource-group-name demo --key-type ed25519
+ibmcloud is key-create cp4d-admin @cpdadmin-id_ed25519.pub --resource-group-name demo --key-type ed25519
 
 ### Update most current release
 ssh -i ssh-key/cpdadmin-id_ed25519 root@<public IP from cpd-bridgehead Server>
@@ -92,6 +92,7 @@ curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
 ibmcloud plugin install container-service
 ibmcloud plugin install container-registry
 ibmcloud plugin install schematics
+ibmcloud plugin install vpc-infrastructure
 
 ## Install the OC CLI
 
@@ -118,12 +119,12 @@ curl -sfL get.cloudnativetoolkit.dev | sh -
 check if newer version of cpd-cli is release - download the corresponding to your cpd-cluster version
 https://github.com/IBM/cpd-cli/releases
 
-wget https://github.com/IBM/cpd-cli/releases/download/v13.0.0/cpd-cli-linux-EE-13.0.0.tgz
+wget https://github.com/IBM/cpd-cli/releases/download/v13.0.1/cpd-cli-linux-EE-13.0.1.tgz
 
 mkdir ~/Git
 mkdir ~/Git/cpd-cli
-tar xvf cpd-cli-linux-EE-13.0.0.tgz 
-mv cpd-cli-linux-EE-13.0.0-9/* ~/Git/cpd-cli
+tar xvf cpd-cli-linux-EE-13.0.1.tgz 
+mv cpd-cli-linux-EE-13.0.1-26/* ~/Git/cpd-cli
 
 mkdir -p $HOME/.local/bin
 cd $HOME/.local

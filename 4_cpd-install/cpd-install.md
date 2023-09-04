@@ -16,6 +16,8 @@ cpd-cli manage login-to-ocp \
 --server=${OCP_URL} \
 --token=${OCP_TOKEN}
 
+cpd-cli manage restart-container
+
 oc new-project ${PROJECT_CPD_INST_OPERATORS}
 oc new-project ${PROJECT_CPD_INST_OPERANDS}
 
@@ -49,6 +51,7 @@ cpd-cli manage authorize-instance-topology \
 --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 
+
 cpd-cli manage setup-mcg \
 --components=watson_assistant \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
@@ -66,6 +69,7 @@ cpd-cli manage setup-mcg \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
 --noobaa_account_secret=${NOOBAA_ACCOUNT_CREDENTIALS_SECRET} \
 --noobaa_cert_secret=${NOOBAA_ACCOUNT_CERTIFICATE_SECRET}
+
 
 cpd-cli manage setup-instance-topology \
 --release=${VERSION} \
@@ -90,7 +94,7 @@ cpd-cli manage apply-olm \
 --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
 --components=${COMPONENTS}
 
-cpd-cli manage apply-db2-kubelet
+?? cpd-cli manage apply-db2-kubelet
 
 ``` 
 
@@ -110,9 +114,20 @@ cpd-cli manage apply-cr \
 --release=${VERSION} \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
 --components=${COMPONENTS} \
+--param-file=/tmp/work/install-options.yml \
 --block_storage_class=${STG_CLASS_BLOCK} \
 --file_storage_class=${STG_CLASS_FILE} \
 --license_acceptance=true
+
+cpd-cli manage apply-cr \
+--components=wkc \
+--release=${VERSION} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--block_storage_class=${STG_CLASS_BLOCK} \
+--file_storage_class=${STG_CLASS_FILE} \
+--param-file=/tmp/work/install-options.yml \
+--license_acceptance=true
+
 
 cpd-cli manage get-cpd-instance-details \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}

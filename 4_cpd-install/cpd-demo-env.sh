@@ -8,7 +8,7 @@ export IMAGE_ARCH=amd64
 export OCP_TOKEN=sha256~FXxn5FY-9cEcUgzlXA0tRM95ZtiPVFohbXLp9ZJKm94
 export OPENSHIFT_TYPE=roks
 
-export CPD_CLI_MANAGE_WORKSPACE=/root/Git/cp4d-demo-install
+export CPD_CLI_MANAGE_WORKSPACE=~/Git/cp4d-demo-install/work
 
 export STG_CLASS_BLOCK=ocs-storagecluster-ceph-rbd
 export STG_CLASS_FILE=ocs-storagecluster-cephfs
@@ -27,7 +27,7 @@ export NOOBAA_ACCOUNT_CERTIFICATE_SECRET=noobaa-s3-serving-cert
 # export PRIVATE_REGISTRY_PUSH_USER=cp4d
 # export PRIVATE_REGISTRY_PUSH_PASSWORD=Cp4D2Ibm#
 
-export VERSION=4.7.1
+export VERSION=4.7.2
 
 export IBM_ENTITLEMENT_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE2Njc5ODQzNDksImp0aSI6ImJlN2E3YzlkOGU3YjQ4MTZiYmE5NmY3N2E5ZTUzNGYxIn0._Y3fZkFCn7n1sxpGoRJxJyhqadvXrh6qHLCN3TwCqDQ
 
