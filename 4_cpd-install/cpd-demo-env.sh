@@ -3,9 +3,9 @@
 #===============================================================================
 
 export OCP_VPC=cpd
-export OCP_URL=https://c115-e.eu-de.containers.cloud.ibm.com:30116
+export OCP_URL=https://c114-e.eu-de.containers.cloud.ibm.com:31608
 export IMAGE_ARCH=amd64
-export OCP_TOKEN=sha256~FXxn5FY-9cEcUgzlXA0tRM95ZtiPVFohbXLp9ZJKm94
+export OCP_TOKEN=sha256~JuFECvMTbtKy_3WEOiXLnS5J8Nr3vhKxImETz3QOLO8
 export OPENSHIFT_TYPE=roks
 
 export CPD_CLI_MANAGE_WORKSPACE=~/Git/cp4d-demo-install/work

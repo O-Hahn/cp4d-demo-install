@@ -76,8 +76,8 @@ ibmcloud resource service-instance-create $OCP_VPC-ocs cloud-object-storage stan
 ```
 ibmcloud resource service-key-create cos-cred-rw Writer --instance-name $OCP_VPC-cos --parameters '{"HMAC": true}'
 
-export ACCESS_KEY_ID=fae94da02dbf47678d488e06f2f000bf
-export SECRET_ACCESS_KEY=a3c04239492a46cff32db0f6a790cb7eda389148992feedb
+export ACCESS_KEY_ID=405f82bc62764aabb7a2057bc3420f19
+export SECRET_ACCESS_KEY=a6e0ce53b3fd1a7151ad44e0a89dbc3706bdb11917c5e47f
 
 oc -n 'openshift-storage' create secret generic 'ibm-cloud-cos-creds' --type=Opaque --from-literal=IBM_COS_ACCESS_KEY_ID=<access_key_id> 
 --from-literal=IBM_COS_SECRET_ACCESS_KEY=<secret_access_key>
@@ -96,7 +96,7 @@ export NOOBAA_ACCOUNT_CERTIFICATE_SECRET=noobaa-s3-serving-cert
 ```
 
 ### Create the ODF cluster
-Edit the cpd-cluster-ocscluster.yaml with the ip-adresses from the ocs-worker 
+Edit the ocs-cluster.yaml with the ip-adresses from the ocs-worker 
 
 ```
 echo $(ibmcloud oc workers --cluster $OCP_VPC --worker-pool $OCP_VPC-ocs -q | awk '{print $2}')
@@ -134,9 +134,9 @@ daemon.json:
 ## 
 
 
-# Additional Temp Infos & Tries
+# Additional Temp Infos & Tries - nothing to do - only if above steps failed... 
 
-### Apply global secret on ROKS 
+## HowTo: Apply global secret on ROKS 
 
 ```
 IBM_EK_B64=$(echo -n "cp:"+$IBM_ENTITLEMENT_KEY | base64 -w0)
@@ -171,7 +171,7 @@ oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson
 
 ```
 
-### Label and taint nodes for OFS
+## HowTo: Label and taint nodes for OFS
 
 optional: if not done with script
 

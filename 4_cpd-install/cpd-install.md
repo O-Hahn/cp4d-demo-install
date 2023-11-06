@@ -34,7 +34,7 @@ cpd-cli manage login-to-ocp \
 --server=${OCP_URL} \
 --token=${OCP_TOKEN}
 
-oc project ${PROJECT_CPD_INSTANCE}
+oc project ${PROJECT_CPD_INST_OPERANDS}
 
 cpd-cli manage apply-cluster-components \
 --release=${VERSION} \
@@ -51,7 +51,7 @@ cpd-cli manage authorize-instance-topology \
 --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 
-
+---- Optional -----
 cpd-cli manage setup-mcg \
 --components=watson_assistant \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
@@ -69,7 +69,7 @@ cpd-cli manage setup-mcg \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
 --noobaa_account_secret=${NOOBAA_ACCOUNT_CREDENTIALS_SECRET} \
 --noobaa_cert_secret=${NOOBAA_ACCOUNT_CERTIFICATE_SECRET}
-
+---- Optional -----
 
 cpd-cli manage setup-instance-topology \
 --release=${VERSION} \
@@ -87,7 +87,7 @@ metadata:
   namespace: ${PROJECT_CPD_INST_OPERATORS}
 EOF
 
-cp 4_cpd-install/install-options.yml ${CPD_CLI_MANAGE_WORKSPACE}/work/. 
+cp install-options.yml ${CPD_CLI_MANAGE_WORKSPACE}/work/. 
 
 cpd-cli manage apply-olm \
 --release=${VERSION} \
@@ -118,7 +118,22 @@ cpd-cli manage apply-cr \
 --block_storage_class=${STG_CLASS_BLOCK} \
 --file_storage_class=${STG_CLASS_FILE} \
 --license_acceptance=true
+``` 
 
+### Check if installation is ready and ok
+
+``` 
+cpd-cli manage get-cpd-instance-details \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+
+cpd-cli manage get-cpd-instance-details \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--get_admin_initial_credentials=true
+``` 
+
+### Install only one Component (WKC)
+
+``` 
 cpd-cli manage apply-cr \
 --components=wkc \
 --release=${VERSION} \
@@ -128,15 +143,22 @@ cpd-cli manage apply-cr \
 --param-file=/tmp/work/install-options.yml \
 --license_acceptance=true
 
+```
 
-cpd-cli manage get-cpd-instance-details \
---cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+### Enhance with NLP Library 
 
-cpd-cli manage get-cpd-instance-details \
---cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
---get_admin_initial_credentials=true
+Install Embedded NLP Environment on CP4D with WS
 
 ``` 
+oc patch -n ${PROJECT_CPD_INST_OPERANDS} NotebookRuntime ibm-cpd-ws-runtime-231-py --type=merge --patch '{"spec":{"install_nlp_models":true}}'
+``` 
+
+Check if installed 
+``` 
+oc get -n ${PROJECT_CPD_INST_OPERANDS} NotebookRuntime -o custom-columns=NAME:metadata.name,NLP:spec.install_nlp_models,STATUS:status.runtimeStatus
+``` 
+Infos see:
+https://github.com/IBMDataScience/sample-notebooks/tree/master/CloudPakForData/notebooks/4.6
 
 ### If air-gap with quay
 

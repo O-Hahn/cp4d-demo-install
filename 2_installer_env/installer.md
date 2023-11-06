@@ -119,12 +119,12 @@ curl -sfL get.cloudnativetoolkit.dev | sh -
 check if newer version of cpd-cli is release - download the corresponding to your cpd-cluster version
 https://github.com/IBM/cpd-cli/releases
 
-wget https://github.com/IBM/cpd-cli/releases/download/v13.0.1/cpd-cli-linux-EE-13.0.1.tgz
+wget https://github.com/IBM/cpd-cli/releases/download/v13.0.2/cpd-cli-linux-EE-13.0.2.tgz
 
 mkdir ~/Git
 mkdir ~/Git/cpd-cli
-tar xvf cpd-cli-linux-EE-13.0.1.tgz 
-mv cpd-cli-linux-EE-13.0.1-26/* ~/Git/cpd-cli
+tar xvf cpd-cli-linux-EE-13.0.2.tgz 
+mv cpd-cli-linux-EE-13.0.2-26/* ~/Git/cpd-cli
 
 mkdir -p $HOME/.local/bin
 cd $HOME/.local
